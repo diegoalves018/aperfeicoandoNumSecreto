@@ -6,6 +6,8 @@ let palavraChance;
 
 reiniciarJogo();
 
+ativarEnter();
+
 function numMax() {
     return 100;
 }
@@ -35,7 +37,9 @@ function verificarChute() {
         exibirTextoHTML('h1', 'Parabéns, você acertou!');
         exibirTextoHTML('p', `Você acertou o número secreto com ${tentativas} ${palavraTentativa}!`);
         ativarBotaoReiniciar();
-        return; // Termina a função já que o jogo foi ganho
+        desativarEnter();
+        document.getElementById('enviar').setAttribute('disabled', true);
+        //return; // Termina a função já que o jogo foi ganho
 
     } else {
         // Aumenta a contagem de tentativas e diminui as chances
@@ -72,6 +76,14 @@ function ativarBotaoReiniciar() {
     document.getElementById('reiniciar').removeAttribute('disabled');
 }
 
+function desativarBotaoReiniciar(){
+    document.getElementById('reiniciar').setAttribute('disabled', true);
+}
+
+function ativarBotaoEnviar(){
+    document.getElementById('enviar').removeAttribute('disabled')
+}
+
 function reiniciarJogo() {    
     chances = 5;
     tentativas = 1;
@@ -80,12 +92,25 @@ function reiniciarJogo() {
     numSecreto = numAleatorio();
     limparCampo();    
     mensagemTelaInicial();
-    document.getElementById('reiniciar').setAttribute('disabled', true);
+    ativarBotaoEnviar();
+    ativarEnter();
+    desativarBotaoReiniciar();
     console.log(numSecreto);
 }
 
 // Adicionando o botão ENTER como alternativa ao clique CHUTE
-document.querySelector('input').addEventListener('keypress', (event) => {
+// Função para ativar o evento "Enter"
+function ativarEnter() {
+    document.querySelector('input').addEventListener('keypress', gerenciarEnter);
+}
+
+// Função para desativar o evento "Enter"
+function desativarEnter() {
+    document.querySelector('input').removeEventListener('keypress', gerenciarEnter);
+}
+
+// Função gerenciadora do evento "Enter"
+function gerenciarEnter(event) {
     if (event.key === 'Enter') {
         event.preventDefault(); // Impede o comportamento padrão
         let chute = parseInt(document.querySelector('input').value);
@@ -93,4 +118,4 @@ document.querySelector('input').addEventListener('keypress', (event) => {
             verificarChute(); // Chama a função para verificar o chute apenas se for válido
         }
     }
-});
+}
