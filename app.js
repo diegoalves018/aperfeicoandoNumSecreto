@@ -38,7 +38,7 @@ function verificarChute() {
         exibirTextoHTML('p', `Você acertou o número secreto com ${tentativas} ${palavraTentativa}!`);
         ativarBotaoReiniciar();
         desativarEnter();
-        document.getElementById('enviar').setAttribute('disabled', true);
+        desativarBotaoChute();
         //return; // Termina a função já que o jogo foi ganho
 
     } else {
@@ -59,6 +59,8 @@ function verificarChute() {
         if (chances == 0) {
             exibirTextoHTML('p', `Você acabou com as chances. O número secreto era ${numSecreto}. Tente novamente!`);
             ativarBotaoReiniciar();
+            desativarBotaoChute();
+
         }
     }
 }
@@ -70,6 +72,10 @@ function numAleatorio() {
 function limparCampo() {
     let chute = document.querySelector('input');
     chute.value = '';
+}
+
+function desativarBotaoChute(){
+    document.getElementById('enviar').setAttribute('disabled', true);
 }
 
 function ativarBotaoReiniciar() {
