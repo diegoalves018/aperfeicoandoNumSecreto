@@ -8,6 +8,7 @@ reiniciarJogo();
 
 ativarEnter();
 
+// Valor que o jogo funciona: 1 até numMax
 function numMax() {
     return 100;
 }
@@ -17,6 +18,7 @@ function mensagemTelaInicial() {
     exibirTextoHTML('p', `Escolha o número de 1 a ${numMax()}. Você possui ${chances} ${palavraChance}!`);
 }
 
+//Função para exibir uma mensagem no lugar das mensagens da tela inicial
 function exibirTextoHTML(tag, texto) {
     let campo = document.querySelector(tag);
     campo.innerHTML = texto; 
